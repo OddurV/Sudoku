@@ -27,7 +27,7 @@ var entityManager = {
 
 // "PRIVATE" DATA
 
-_cells   : [],
+_cells   : [[],[],[],[],[],[],[],[],[]],
 
 // "PRIVATE" METHODS
 
@@ -39,87 +39,50 @@ _generateCells : function() {
                         x : i * g_canvas.width / 9,
                         y : j * g_canvas.height / 9
                     };
-            this._cells.push(new Cell(descr));
+            this._cells[j].push(new Cell(descr));
         }
     }
 },
 
-
-_forEachOf: function(aCategory, fn) {
-    for (var i = 0; i < aCategory.length; ++i) {
-        fn.call(aCategory[i]);
-    }
-},
-
 // PUBLIC METHODS
-
-// A special return value, used by other objects,
-// to request the blessed release of death!
-//
-KILL_ME_NOW : -1,
-
-// Some things must be deferred until after initial construction
-// i.e. thing which need `this` to be defined.
-//
-deferredSetup : function () {
-    this._categories = [this._cells];
-},
 
 init: function() {
     this._generateCells();
 },
 
 unselect : function () {
-    for (var i = 0; i < this._cells.length; i++) {
-        this._cells[i].unselect();
+    for (var j = 0; j < this._cells.length; j++) {
+        for (var i = 0; i < this._cells[j].length; i++) {
+            this._cells[j][i].unselect();            
+        };
     }
 },
 
 setNum : function (num) {
-  for (var i = 0; i < this._cells.length; i++) {
-        if (this._cells[i].isSelected) this._cells[i].setMain(num);
-    }  
+    for (var j = 0; j < this._cells.length; j++) {
+        for (var i = 0; i < this._cells[j].length; i++) {
+            console.log("ey");
+            if (this._cells[j][i].isSelected) this._cells[j][i].setMain(num);
+        }
+    }
 },
 
 update: function(du) {
 
-    for (var c = 0; c < this._categories.length; ++c) {
-
-        var aCategory = this._categories[c];
-        var i = 0;
-
-        while (i < aCategory.length) {
-
-            var status = aCategory[i].update(du);
-
-            if (status === this.KILL_ME_NOW) {
-                // remove the dead guy, and shuffle the others down to
-                // prevent a confusing gap from appearing in the array
-                aCategory.splice(i,1);
-            }
-            else {
-                ++i;
-            }
-        }
-    }
+    for (var j = 0; j < this._cells.length; j++) {
+        for (var i = 0; i < this._cells[j].length; i++) {
+            this._cells[j][i].update(du);
+        };
+    } 
 },
 
 render: function(ctx) {
 
-    for (var c = 0; c < this._categories.length; ++c) {
-
-        var aCategory = this._categories[c];
-
-        for (var i = 0; i < aCategory.length; ++i) {
-
-            aCategory[i].render(ctx);
-
-        }
-    }
+    for (var j = 0; j < this._cells.length; j++) {
+        for (var i = 0; i < this._cells[j].length; i++) {
+            this._cells[j][i].render(ctx);
+        };
+    } 
 }
 
-}
-
-// Some deferred setup which needs the object to have been created first
-entityManager.deferredSetup();
-
+};
