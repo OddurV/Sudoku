@@ -60,6 +60,13 @@ mouseover: function(x, y, w, h) {
             y + h > g_mouseY;
 },
 
+hasTrue: function(array) {
+    for (var i = 0; i < array.length; i++) {
+        if (array[i]) return true;
+    }
+    return false;
+},
+
 // DISTANCES
 // =========
 
@@ -72,7 +79,7 @@ wrappedDistSq: function(x1, y1, x2, y2, xWrap, yWrap) {
 	dy = Math.abs(y2-y1);
     if (dx > xWrap/2) {
 	dx = xWrap - dx;
-    };
+    }
     if (dy > yWrap/2) {
 	dy = yWrap - dy;
     }

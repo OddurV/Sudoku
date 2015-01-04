@@ -50,6 +50,14 @@ init: function() {
     this._generateCells();
 },
 
+unhighlight : function () {
+    for (var j = 0; j < this._cells.length; j++) {
+        for (var i = 0; i < this._cells[j].length; i++) {
+            this._cells[j][i].unhighlight();            
+        };
+    }
+},
+
 unselect : function () {
     for (var j = 0; j < this._cells.length; j++) {
         for (var i = 0; i < this._cells[j].length; i++) {
@@ -61,7 +69,6 @@ unselect : function () {
 setNum : function (num) {
     for (var j = 0; j < this._cells.length; j++) {
         for (var i = 0; i < this._cells[j].length; i++) {
-            console.log("ey");
             if (this._cells[j][i].isSelected) this._cells[j][i].setMain(num);
         }
     }
@@ -69,11 +76,27 @@ setNum : function (num) {
 
 update: function(du) {
 
-    for (var j = 0; j < this._cells.length; j++) {
+    var x = Math.floor(g_mouseX/(g_canvas.width/9));
+    var y = Math.floor(g_mouseY/(g_canvas.height/9));
+    //console.log("x:",x,"y:",y);
+    this.unhighlight();
+    if (x > -1 && x < 9 && y > -1 && y < 9) {
+        this._cells[y][x].highlight();
+        if (g_isMouseDown) {
+            this.unselect();
+            this._cells[y][x].update(du);
+        }
+    }
+
+//console.log(keys);
+//console.log(util.hasTrue(keys));
+//if (util.hasTrue(keys)) {console.log("It's working!")};
+
+    /*for (var j = 0; j < this._cells.length; j++) {
         for (var i = 0; i < this._cells[j].length; i++) {
             this._cells[j][i].update(du);
         };
-    } 
+    }*/ 
 },
 
 render: function(ctx) {

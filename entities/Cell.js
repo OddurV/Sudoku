@@ -41,19 +41,33 @@ Cell.prototype.unselect = function () {
     this.isSelected = false;
 };
 
+Cell.prototype.select = function () {
+    this.isSelected = true;
+};
+
+Cell.prototype.unhighlight = function () {
+    this.isHighlighted = false;
+};
+
+Cell.prototype.highlight = function () {
+    this.isHighlighted = true;
+}
+
 Cell.prototype.setMain = function (num) {
     this.main = num;
 };
 
 Cell.prototype.update = function (du) {
-    if (util.mouseover(this.x, this.y, this.width, this.height)) {
+    this.select();
+    
+    /*if (util.mouseover(this.x, this.y, this.width, this.height)) {
         this.isHighlighted = true;
         if (g_isMouseDown) {
             entityManager.unselect();
             this.isSelected = true;
         }
     }
-    else this.isHighlighted = false;
+    else this.isHighlighted = false;*/
 };
 
 Cell.prototype.render = function (ctx) {
