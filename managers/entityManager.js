@@ -50,15 +50,17 @@ init: function() {
     this._generateCells();
 },
 
-unhighlight : function () {
+unhighlightAll : function () {
     for (var j = 0; j < this._cells.length; j++) {
         for (var i = 0; i < this._cells[j].length; i++) {
             this._cells[j][i].unhighlight();            
+            if (!this._cells[j][i].isSelected) this._cells[j][i].state = 0;
+            //this._cells[j][i].state = 0;
         };
     }
 },
 
-unselect : function () {
+unselectAll : function () {
     for (var j = 0; j < this._cells.length; j++) {
         for (var i = 0; i < this._cells[j].length; i++) {
             this._cells[j][i].unselect();            
@@ -69,23 +71,19 @@ unselect : function () {
 setNum : function (num) {
     for (var j = 0; j < this._cells.length; j++) {
         for (var i = 0; i < this._cells[j].length; i++) {
-            if (this._cells[j][i].isSelected) this._cells[j][i].setMain(num);
+            if (this._cells[j][i].isSelected) this._cells[j][i].setNum(num);
         }
     }
 },
 
 update: function(du) {
-
+    // convert mouse co-ordinates to grid co-ordinates
     var x = Math.floor(g_mouseX/(g_canvas.width/9));
     var y = Math.floor(g_mouseY/(g_canvas.height/9));
     //console.log("x:",x,"y:",y);
-    this.unhighlight();
+    this.unhighlightAll();
     if (x > -1 && x < 9 && y > -1 && y < 9) {
-        this._cells[y][x].highlight();
-        if (g_isMouseDown) {
-            this.unselect();
-            this._cells[y][x].update(du);
-        }
+        this._cells[y][x].update(du);
     }
 
 //console.log(keys);
