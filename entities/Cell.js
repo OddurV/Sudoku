@@ -21,7 +21,7 @@
     console.dir(this);
     */
     this.setup(descr);
-};
+}
 
 Cell.prototype.setup = function (descr) {
 
@@ -72,7 +72,7 @@ Cell.prototype.unhighlight = function () {
 
 Cell.prototype.highlight = function () {
     this.isHighlighted = true;
-}
+};
 
 Cell.prototype.setNum = function (num) {
 

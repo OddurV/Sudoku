@@ -56,7 +56,7 @@ unhighlightAll : function () {
             this._cells[j][i].unhighlight();            
             if (!this._cells[j][i].isSelected) this._cells[j][i].state = 0;
             //this._cells[j][i].state = 0;
-        };
+        }
     }
 },
 
@@ -64,7 +64,7 @@ unselectAll : function () {
     for (var j = 0; j < this._cells.length; j++) {
         for (var i = 0; i < this._cells[j].length; i++) {
             this._cells[j][i].unselect();            
-        };
+        }
     }
 },
 
@@ -102,7 +102,7 @@ render: function(ctx) {
     for (var j = 0; j < this._cells.length; j++) {
         for (var i = 0; i < this._cells[j].length; i++) {
             this._cells[j][i].render(ctx);
-        };
+        }
     } 
 }
 
